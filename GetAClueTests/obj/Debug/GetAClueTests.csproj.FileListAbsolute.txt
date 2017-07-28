@@ -1,0 +1,10 @@
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\GetAClueTests.dll
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\GetAClueTests.pdb
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\GetAClue.exe
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\GetAClue.pdb
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\obj\Debug\GetAClueTests.csprojResolveAssemblyReference.cache
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\obj\Debug\GetAClueTests.dll
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\obj\Debug\GetAClueTests.pdb
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\DevExpress.Mvvm.v16.1.dll
+C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\DevExpress.Mvvm.v16.1.xml

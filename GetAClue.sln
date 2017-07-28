@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetAClue", "GetAClue\GetAClue.csproj", "{DEDC2673-4B07-4052-A6E5-CA2B4ADCF0BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetAClueTests", "GetAClueTests\GetAClueTests.csproj", "{149CED0B-CFD1-44FE-8142-683804626227}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DEDC2673-4B07-4052-A6E5-CA2B4ADCF0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEDC2673-4B07-4052-A6E5-CA2B4ADCF0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEDC2673-4B07-4052-A6E5-CA2B4ADCF0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEDC2673-4B07-4052-A6E5-CA2B4ADCF0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{149CED0B-CFD1-44FE-8142-683804626227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{149CED0B-CFD1-44FE-8142-683804626227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{149CED0B-CFD1-44FE-8142-683804626227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{149CED0B-CFD1-44FE-8142-683804626227}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
