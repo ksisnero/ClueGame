@@ -134,7 +134,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Windows\MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -142,15 +142,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CheckForAnswer.cs" />
+    <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\GameOver.cs" />
-    <Compile Include="Models\GenerateAnswer.cs" />
-    <Compile Include="Models\GuessCount.cs" />
-    <Compile Include="Models\GuessDisplay.cs" />
+    <Compile Include="Models\Guesses.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MainViewModelProperties.cs" />
-    <Compile Include="ViewModels\EnablingButtons.cs" />
-    <Compile Include="Windows\MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -195,16 +192,16 @@
     <None Include="Resources\transparentWeapon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Windows\Images\RoomTransparency.png" />
+    <Resource Include="Views\Images\RoomTransparency.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Windows\Images\SuspectsTransparent.png" />
+    <Resource Include="Views\Images\SuspectsTransparent.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Windows\Images\TransparentClueLogo.png" />
+    <Resource Include="Views\Images\TransparentClueLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Windows\Images\transparentWeapon.png" />
+    <Resource Include="Views\Images\transparentWeapon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

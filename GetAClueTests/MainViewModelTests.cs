@@ -23,9 +23,9 @@ namespace GetAClueTests
             MainViewModel mainViewModel = new MainViewModel();
             var booleanToVisibilityConverter = new BooleanToVisibilityConverter();
 
-            Assert.AreEqual(true, mainViewModel.RoomOption);
-            Assert.AreEqual(false, mainViewModel.WeaponOption);
-            Assert.AreEqual(false, mainViewModel.SuspectOption);
+            Assert.AreEqual(true, mainViewModel.ChooseRoomOptionVisible);
+            Assert.AreEqual(false, mainViewModel.ChooseWeaponOptionVisible);
+            Assert.AreEqual(false, mainViewModel.ChooseSuspectOptionVisible);
 
             //Does true/false boolean equal to appropriate visibilty
             Assert.IsTrue(booleanToVisibilityConverter.Convert(true, typeof(Visibility), null, new CultureInfo("en-US"))

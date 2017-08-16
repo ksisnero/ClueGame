@@ -4,15 +4,14 @@ namespace GetAClue.ViewModels
 {
     public partial class MainViewModel
     {
-        public virtual bool RoomOption { get; set; }
-        public virtual bool WeaponOption { get; set; }
-        public virtual bool SuspectOption { get; set; }
-        public virtual bool InstructionOption { get; set; }
-        public virtual bool EnterButtonEnabler { get; set; }
+        public virtual bool ChooseRoomOptionVisible { get; set; }
+        public virtual bool ChooseWeaponOptionVisible { get; set; }
+        public virtual bool ChooseSuspectOptionVisible { get; set; }
+        public virtual bool InstructionsVisible { get; set; }
+        public virtual bool EnterButtonEnabled { get; set; }
 
-        public virtual bool RoomButtonEnabler { get; set; }
-        public virtual bool WeaponButtonEnabler { get; set; }
-        public virtual bool SuspectButtonEnabler { get; set; }
+        public virtual bool NextButtonEnabled { get; set; }
+        public virtual bool BackButtonEnabled { get; set; }
 
         public virtual bool LoungeRadioButton { get; set; }
         public virtual bool StudyRadioButton { get; set; }
@@ -37,11 +36,8 @@ namespace GetAClue.ViewModels
         public virtual bool MrsPeacockRadioButton { get; set; }
         public virtual bool MrsWhiteRadioButton { get; set; }
 
-        public virtual bool YouWinVisibility { get; set; }
-        public virtual bool YouLoseVisibility { get; set; }
-
-        public virtual GuessDisplay GuessDisplay { get; set; }
-        public virtual GuessCount CounterDisplay { get; set; } 
+        public virtual bool YouWinVisible { get; set; }
+        public virtual bool YouLoseVisible { get; set; }
 
     }
 }

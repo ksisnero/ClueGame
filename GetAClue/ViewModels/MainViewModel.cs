@@ -1,16 +1,18 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using System.Windows;
+﻿using System.Security.Policy;
 using DevExpress.Mvvm.POCO;
-using DevExpress.Web.ASPxRichEdit.Export;
 using GetAClue.Models;
 
 namespace GetAClue.ViewModels
 {
     public partial class MainViewModel
     {
-        //Change slides automatically
+        public virtual string SuspectTextbox { get; set; }
+        public virtual string WeaponTextbox { get; set; }
+        public virtual string RoomTextbox { get; set; }
+        public virtual string CounterTextbox { get; set; }
 
+        //Counter's initializer must be outside or the counter will always restart
+        private Guesses guessCount = new Guesses();
         private string _roomGuess;
         private string _weaponGuess;
         private string _suspectGuess;
@@ -19,60 +21,78 @@ namespace GetAClue.ViewModels
         private string _answerWeapon;
         private string _answerSuspect;
 
-        private GuessCount _guessCount = new GuessCount();
-        private GameOver _gameOver;
+        private int _counter;
 
         public MainViewModel()
         {
-            GenerateAnswer();
-            InstructionOption = true;
-
-            GuessDisplay = ViewModelSource.Create(() => new GuessDisplay());
-            CounterDisplay = ViewModelSource.Create(() => new GuessCount());
+            InstructionsVisible = true;
         }
 
         public void StartGame()
         {
-            _gameOver = new GameOver();
+            InstructionsVisible = false;
+            YouLoseVisible = false;
+            YouWinVisible = false;
 
-            InstructionOption = false;
-            YouLoseVisibility = false;
-            YouWinVisibility = false;
+            ChooseRoomOptionVisible = false;
+            ChooseWeaponOptionVisible = false;
+            ChooseSuspectOptionVisible = true;
 
-            SuspectOption = true;
-            WeaponOption = false;
-            RoomOption = false;
+            NextButtonEnabled = true;
+            BackButtonEnabled = true;
 
-            RoomButtonEnabler = true;
-            WeaponButtonEnabler = true;
-            SuspectButtonEnabler = true;
+            EnterButtonEnabled = true;
+            _counter = 0;
 
-            EnterButtonEnabler = true;
-            UncheckRadioButtons();
+            UncheckAllRadioButtons();
+            GenerateAnswer();
         }
 
-        public void EnableRoom()
+        public virtual void Back()
         {
-            RoomOption = true;
-            WeaponOption = false;
-            SuspectOption = false;
+            if (ChooseRoomOptionVisible)
+            {
+                ChooseRoomOptionVisible = false;
+                ChooseWeaponOptionVisible = false;
+                ChooseSuspectOptionVisible = true;
+            }
+            else if (ChooseSuspectOptionVisible)
+            {
+                ChooseRoomOptionVisible = true;
+                ChooseWeaponOptionVisible = false;
+                ChooseSuspectOptionVisible = false;
+            }
+            else if (ChooseWeaponOptionVisible)
+            {
+                ChooseRoomOptionVisible = false;
+                ChooseWeaponOptionVisible = false;
+                ChooseSuspectOptionVisible = true;
+            }
         }
 
-        public void EnableSuspect()
+        public virtual void Next()
         {
-            RoomOption = false;
-            WeaponOption = false;
-            SuspectOption = true;
+            if (ChooseSuspectOptionVisible)
+            {
+                ChooseRoomOptionVisible = false;
+                ChooseWeaponOptionVisible = true;
+                ChooseSuspectOptionVisible = false;
+            }
+            else if (ChooseWeaponOptionVisible)
+            {
+                ChooseRoomOptionVisible = true;
+                ChooseWeaponOptionVisible = false;
+                ChooseSuspectOptionVisible = false;
+            }
+            else if (ChooseRoomOptionVisible)
+            {
+                ChooseRoomOptionVisible = false;
+                ChooseWeaponOptionVisible = false;
+                ChooseSuspectOptionVisible = true;
+            }
         }
 
-        public void EnableWeapon()
-        {
-            RoomOption = false;
-            WeaponOption = true;
-            SuspectOption = false;
-        }
-
-        public void UncheckRadioButtons()
+        public void UncheckAllRadioButtons()
         {
             LoungeRadioButton = false;
             StudyRadioButton = false;
@@ -100,31 +120,38 @@ namespace GetAClue.ViewModels
 
         public void EnterButton()
         {
+            ChooseRoomOptionVisible = false;
+            ChooseWeaponOptionVisible = false;
+            ChooseSuspectOptionVisible = true;
+
             DisplayGuess();
             CheckIfGameOver();
-            UncheckRadioButtons();
+            UncheckAllRadioButtons();
             CheckForAnswer();
-            CountGuess();      
+            CountGuess();
         }
 
         public void GenerateAnswer()
         {
-            //put string[] here?
-
-            GenerateAnswer generateAnswer = new GenerateAnswer();
-            _answerRoom = generateAnswer.AnswerGenerator();
-            _answerSuspect = generateAnswer.AnswerGenerator();
-            _answerWeapon = generateAnswer.AnswerGenerator();
+            Answer generateAnswer = new Answer();
+            _answerRoom = generateAnswer.AnswerRoom();
+            _answerSuspect = generateAnswer.AnswerSuspect();
+            _answerWeapon = generateAnswer.AnswerWeapon();
         }
 
         public void CountGuess()
         {
-            CounterDisplay.DisplayCounter = _guessCount.Counter();
-        }
+            if (_counter < 5)
+                _counter = _counter + 1;
+            else
+                CheckIfGameOver();
+
+        CounterTextbox = _counter.ToString();
+    }
 
         public void DisplayGuess()
         {
-            GuessDisplay userGuessDisplay = new GuessDisplay();
+            Guesses userGuessDisplay = new Guesses();
 
             _roomGuess += userGuessDisplay.DisplayGuesses(LoungeRadioButton, "Lounge");
             _roomGuess += userGuessDisplay.DisplayGuesses(StudyRadioButton, "Study");
@@ -151,40 +178,36 @@ namespace GetAClue.ViewModels
 
             CheckForAnswer();
 
-            GuessDisplay.SuspectTextbox = _suspectGuess += "\n";
-            GuessDisplay.WeaponTextbox = _weaponGuess += "\n";
-            GuessDisplay.RoomTextbox = _roomGuess += "\n";
+            SuspectTextbox = _suspectGuess += "\n";
+            WeaponTextbox = _weaponGuess += "\n";
+            RoomTextbox = _roomGuess += "\n";
         }
 
         public void CheckForAnswer()
         {
-            CheckForAnswer checkForAnswerRoom = new CheckForAnswer();
-            _roomGuess = checkForAnswerRoom.CheckIfAnswer(_roomGuess, _answerRoom);
-            _weaponGuess = checkForAnswerRoom.CheckIfAnswer(_weaponGuess, _answerWeapon);
-            _suspectGuess = checkForAnswerRoom.CheckIfAnswer(_suspectGuess, _answerSuspect);
+            Guesses checkForAnswer = new Guesses();
+            _roomGuess = checkForAnswer.CheckIfAnswer(_roomGuess, _answerRoom);
+            _weaponGuess = checkForAnswer.CheckIfAnswer(_weaponGuess, _answerWeapon);
+            _suspectGuess = checkForAnswer.CheckIfAnswer(_suspectGuess, _answerSuspect);
         }
 
         public void CheckIfGameOver()
         {
-            if (_gameOver.GameOverDisplay(_roomGuess, _weaponGuess, _suspectGuess) == true)
+            GameOver gameOver = new GameOver();
+
+            if (gameOver.GameOverDisplay(_roomGuess, _weaponGuess, _suspectGuess))
             {
-                YouWinVisibility = true;
-                SuspectOption = false;
-                WeaponOption = false;
-                RoomOption = false;
+                YouWinVisible = true;
+                ChooseSuspectOptionVisible = false;
+                ChooseWeaponOptionVisible = false;
+                ChooseRoomOptionVisible = false;
             }
-            else if (CounterDisplay.DisplayCounter == "6")
+            else if (CounterTextbox == "6")
             {
-                YouLoseVisibility = true;
-                SuspectOption = false;
-                WeaponOption = false;
-                RoomOption = false;
-            }
-            else
-            {
-                SuspectOption = true;
-                WeaponOption = false;
-                RoomOption = false;
+                YouLoseVisible = true;
+                ChooseSuspectOptionVisible = false;
+                ChooseWeaponOptionVisible = false;
+                ChooseRoomOptionVisible = false;
             }
         }
     }
