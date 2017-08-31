@@ -8,3 +8,11 @@ C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\o
 C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\obj\Debug\GetAClueTests.pdb
 C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\DevExpress.Mvvm.v16.1.dll
 C:\Users\ksisnero\documents\visual studio 2015\Projects\GetAClue\GetAClueTests\bin\Debug\DevExpress.Mvvm.v16.1.xml
+I:\Projects\GetAClue\GetAClueTests\bin\Debug\GetAClueTests.dll
+I:\Projects\GetAClue\GetAClueTests\bin\Debug\GetAClueTests.pdb
+I:\Projects\GetAClue\GetAClueTests\bin\Debug\GetAClue.exe
+I:\Projects\GetAClue\GetAClueTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+I:\Projects\GetAClue\GetAClueTests\bin\Debug\GetAClue.pdb
+I:\Projects\GetAClue\GetAClueTests\obj\Debug\GetAClueTests.csprojResolveAssemblyReference.cache
+I:\Projects\GetAClue\GetAClueTests\obj\Debug\GetAClueTests.dll
+I:\Projects\GetAClue\GetAClueTests\obj\Debug\GetAClueTests.pdb

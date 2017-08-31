@@ -1,33 +1,114 @@
-﻿using System.Security.Policy;
-using DevExpress.Mvvm.POCO;
-using GetAClue.Models;
+﻿using GetAClue.Models;
 
 namespace GetAClue.ViewModels
 {
     public partial class MainViewModel
     {
+        #region Properties
         public virtual string SuspectTextbox { get; set; }
         public virtual string WeaponTextbox { get; set; }
         public virtual string RoomTextbox { get; set; }
         public virtual string CounterTextbox { get; set; }
+        #endregion
 
+        #region Declarations
         //Counter's initializer must be outside or the counter will always restart
-        private Guesses guessCount = new Guesses();
-        private string _roomGuess;
-        private string _weaponGuess;
-        private string _suspectGuess;
+        private Answer _answer = new Answer();
+        private Guesses _guess = new Guesses();
+        private GameOver _gameOver = new GameOver();
 
-        private string _answerRoom;
-        private string _answerWeapon;
-        private string _answerSuspect;
+        public string RoomGuess;
+        public string WeaponGuess;
+        public string SuspectGuess;
 
-        private int _counter;
+        public string RoomAnswer;
+        public string WeaponAnswer;
+        public string SuspectAnswer;
+
+        public int Counter;
+        #endregion
 
         public MainViewModel()
         {
             InstructionsVisible = true;
         }
 
+        public void GenerateAnswer()
+        {
+            RoomAnswer = _answer.AnswerRoom();
+            SuspectAnswer = _answer.AnswerSuspect();
+            WeaponAnswer = _answer.AnswerWeapon();
+        }
+
+        public void CountGuess()
+        {
+            if (Counter < 6)
+                Counter = Counter + 1;
+            else
+                CheckIfGameOver();
+
+        CounterTextbox = Counter.ToString();
+    }
+
+        public void DisplayGuess()
+        {
+            RoomGuess += _guess.DisplayGuesses(LoungeRadioButton, "Lounge");
+            RoomGuess += _guess.DisplayGuesses(StudyRadioButton, "Study");
+            RoomGuess += _guess.DisplayGuesses(HallRadioButton, "Hall");
+            RoomGuess += _guess.DisplayGuesses(LibraryRadioButton, "Library");
+            RoomGuess += _guess.DisplayGuesses(DiningRoomRadioButton, "Dining Room");
+            RoomGuess += _guess.DisplayGuesses(KitchenRadioButton, "Kitchen");
+            RoomGuess += _guess.DisplayGuesses(BallroomRadioButton, "Ballroom");
+            RoomGuess += _guess.DisplayGuesses(ConservatoryRadioButton, "Conservatory");
+            RoomGuess += _guess.DisplayGuesses(BilliardRoomRadioButton, "Billiard Room");
+
+            WeaponGuess += _guess.DisplayGuesses(CandlestickRadioButton, "Candlestick");
+            WeaponGuess += _guess.DisplayGuesses(RevolverRadioButton, "Revolver");
+            WeaponGuess += _guess.DisplayGuesses(KnifeRadioButton, "Knife");
+            WeaponGuess += _guess.DisplayGuesses(LeadPipeRadioButton, "Lead Pipe");
+            WeaponGuess += _guess.DisplayGuesses(WrenchRadioButton, "Wrench");
+
+            SuspectGuess += _guess.DisplayGuesses(ColonelMustardRadioButton, "Colonel Mustard");
+            SuspectGuess += _guess.DisplayGuesses(MrGreenRadioButton, "Mr Green");
+            SuspectGuess += _guess.DisplayGuesses(ProfessorPlumRadioButton, "Professor Plum");
+            SuspectGuess += _guess.DisplayGuesses(MissScarletRadioButton, "Miss Scarlet");
+            SuspectGuess += _guess.DisplayGuesses(MrsPeacockRadioButton, "Mrs Peacock");
+            SuspectGuess += _guess.DisplayGuesses(MrsWhiteRadioButton, "Mrs White");
+
+            CheckForAnswer();
+
+            SuspectTextbox = SuspectGuess += "\n";
+            WeaponTextbox = WeaponGuess += "\n";
+            RoomTextbox = RoomGuess += "\n";
+        }
+
+        public void CheckForAnswer()
+        {
+            RoomGuess = _guess.CheckIfAnswer(RoomGuess, RoomAnswer);
+            WeaponGuess = _guess.CheckIfAnswer(WeaponGuess, WeaponAnswer);
+            SuspectGuess = _guess.CheckIfAnswer(SuspectGuess, SuspectAnswer);
+        }
+
+        public void CheckIfGameOver()
+        {
+            if (_gameOver.IfGameOverDisplay(RoomGuess, WeaponGuess, SuspectGuess))
+            {
+                YouWinVisible = true;
+                ChooseSuspectOptionVisible = false;
+                ChooseWeaponOptionVisible = false;
+                ChooseRoomOptionVisible = false;
+            }
+            else if (CounterTextbox == "6")
+            {
+                YouLoseVisible = true;
+                ChooseSuspectOptionVisible = false;
+                ChooseWeaponOptionVisible = false;
+                ChooseRoomOptionVisible = false;
+                EnterButtonEnabled = false;
+            }
+        }
+
+        #region Button Commands
         public void StartGame()
         {
             InstructionsVisible = false;
@@ -40,9 +121,9 @@ namespace GetAClue.ViewModels
 
             NextButtonEnabled = true;
             BackButtonEnabled = true;
-
             EnterButtonEnabled = true;
-            _counter = 0;
+
+            Counter = 0;
 
             UncheckAllRadioButtons();
             GenerateAnswer();
@@ -130,85 +211,6 @@ namespace GetAClue.ViewModels
             CheckForAnswer();
             CountGuess();
         }
-
-        public void GenerateAnswer()
-        {
-            Answer generateAnswer = new Answer();
-            _answerRoom = generateAnswer.AnswerRoom();
-            _answerSuspect = generateAnswer.AnswerSuspect();
-            _answerWeapon = generateAnswer.AnswerWeapon();
-        }
-
-        public void CountGuess()
-        {
-            if (_counter < 5)
-                _counter = _counter + 1;
-            else
-                CheckIfGameOver();
-
-        CounterTextbox = _counter.ToString();
-    }
-
-        public void DisplayGuess()
-        {
-            Guesses userGuessDisplay = new Guesses();
-
-            _roomGuess += userGuessDisplay.DisplayGuesses(LoungeRadioButton, "Lounge");
-            _roomGuess += userGuessDisplay.DisplayGuesses(StudyRadioButton, "Study");
-            _roomGuess += userGuessDisplay.DisplayGuesses(HallRadioButton, "Hall");
-            _roomGuess += userGuessDisplay.DisplayGuesses(LibraryRadioButton, "Library");
-            _roomGuess += userGuessDisplay.DisplayGuesses(DiningRoomRadioButton, "Dining Room");
-            _roomGuess += userGuessDisplay.DisplayGuesses(KitchenRadioButton, "Kitchen");
-            _roomGuess += userGuessDisplay.DisplayGuesses(BallroomRadioButton, "Ballroom");
-            _roomGuess += userGuessDisplay.DisplayGuesses(ConservatoryRadioButton, "Conservatory");
-            _roomGuess += userGuessDisplay.DisplayGuesses(BilliardRoomRadioButton, "Billiard Room");
-
-            _weaponGuess += userGuessDisplay.DisplayGuesses(CandlestickRadioButton, "Candlestick");
-            _weaponGuess += userGuessDisplay.DisplayGuesses(RevolverRadioButton, "Revolver");
-            _weaponGuess += userGuessDisplay.DisplayGuesses(KnifeRadioButton, "Knife");
-            _weaponGuess += userGuessDisplay.DisplayGuesses(LeadPipeRadioButton, "Lead Pipe");
-            _weaponGuess += userGuessDisplay.DisplayGuesses(WrenchRadioButton, "Wrench");
-
-            _suspectGuess += userGuessDisplay.DisplayGuesses(ColonelMustardRadioButton, "Colonel Mustard");
-            _suspectGuess += userGuessDisplay.DisplayGuesses(MrGreenRadioButton, "Mr Green");
-            _suspectGuess += userGuessDisplay.DisplayGuesses(ProfessorPlumRadioButton, "Professor Plum");
-            _suspectGuess += userGuessDisplay.DisplayGuesses(MissScarletRadioButton, "Miss Scarlet");
-            _suspectGuess += userGuessDisplay.DisplayGuesses(MrsPeacockRadioButton, "Mrs Peacock");
-            _suspectGuess += userGuessDisplay.DisplayGuesses(MrsWhiteRadioButton, "Mrs White");
-
-            CheckForAnswer();
-
-            SuspectTextbox = _suspectGuess += "\n";
-            WeaponTextbox = _weaponGuess += "\n";
-            RoomTextbox = _roomGuess += "\n";
-        }
-
-        public void CheckForAnswer()
-        {
-            Guesses checkForAnswer = new Guesses();
-            _roomGuess = checkForAnswer.CheckIfAnswer(_roomGuess, _answerRoom);
-            _weaponGuess = checkForAnswer.CheckIfAnswer(_weaponGuess, _answerWeapon);
-            _suspectGuess = checkForAnswer.CheckIfAnswer(_suspectGuess, _answerSuspect);
-        }
-
-        public void CheckIfGameOver()
-        {
-            GameOver gameOver = new GameOver();
-
-            if (gameOver.GameOverDisplay(_roomGuess, _weaponGuess, _suspectGuess))
-            {
-                YouWinVisible = true;
-                ChooseSuspectOptionVisible = false;
-                ChooseWeaponOptionVisible = false;
-                ChooseRoomOptionVisible = false;
-            }
-            else if (CounterTextbox == "6")
-            {
-                YouLoseVisible = true;
-                ChooseSuspectOptionVisible = false;
-                ChooseWeaponOptionVisible = false;
-                ChooseRoomOptionVisible = false;
-            }
-        }
+        #endregion
     }
 }

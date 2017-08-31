@@ -1,0 +1,8 @@
+I:\Projects\GetAClue\GetAClueTests\bin\Release\GetAClueTests.dll
+I:\Projects\GetAClue\GetAClueTests\bin\Release\GetAClueTests.pdb
+I:\Projects\GetAClue\GetAClueTests\bin\Release\GetAClue.exe
+I:\Projects\GetAClue\GetAClueTests\bin\Release\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+I:\Projects\GetAClue\GetAClueTests\bin\Release\GetAClue.pdb
+I:\Projects\GetAClue\GetAClueTests\obj\Release\GetAClueTests.csprojResolveAssemblyReference.cache
+I:\Projects\GetAClue\GetAClueTests\obj\Release\GetAClueTests.dll
+I:\Projects\GetAClue\GetAClueTests\obj\Release\GetAClueTests.pdb

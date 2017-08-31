@@ -5,24 +5,24 @@ namespace GetAClue.Models
 {
     public class GameOver
     {
-        public bool Check(string guess)
+        public bool CheckIfCorrect(string guess)
         {
-            bool isFound = false;
+            bool isCorrect = false;
 
             var words = Regex.Split(guess, "\n");
             var find = words.Count(c => c == "*");
 
             if (find > 0)
             {
-                isFound = true;
+                isCorrect = true;
             }
-            return isFound;
+            return isCorrect;
         }
 
-        public bool GameOverDisplay(string roomGuess, string weaponGuess, string suspectGuess)
+        public bool IfGameOverDisplay(string roomGuess, string weaponGuess, string suspectGuess)
         {
-            bool results = Check(roomGuess) && Check(weaponGuess) && Check(suspectGuess);
-            return results;
+            bool allAreCorrect = CheckIfCorrect(roomGuess) && CheckIfCorrect(weaponGuess) && CheckIfCorrect(suspectGuess);
+            return allAreCorrect;
         }
     }
 }
